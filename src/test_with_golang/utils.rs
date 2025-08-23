@@ -1,4 +1,4 @@
-//! Utilities for testing Drand-rs with Drand-go (v2.1.2-insecure bebad8fc).
+//! Utilities for testing Drand-rs with Drand-go (v2.1.3-insecure be545f55).
 
 use crate::cli::*;
 use crate::dkg::status::Status;
