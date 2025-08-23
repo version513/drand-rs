@@ -64,6 +64,24 @@ impl Cli {
         }))
     }
 
+    pub fn follow(
+        control: String,
+        id: String,
+        chain_hash: String,
+        sync_nodes: Vec<String>,
+        up_to: u64,
+        follow: bool,
+    ) -> Self {
+        Self::new(Cmd::Sync(SyncConfig {
+            control,
+            chain_hash,
+            sync_nodes,
+            up_to,
+            id,
+            follow,
+        }))
+    }
+
     pub fn stop(control: &str, id: Option<&str>) -> Self {
         Self::new(Cmd::Stop {
             control: control.to_string(),
@@ -734,6 +752,32 @@ impl NodeConfig {
                 );
                 run_cmd_golang(&args).await;
             }
+        }
+    }
+
+    pub fn follow(
+        &self,
+        id: &str,
+        chain_hash: &str,
+        sync_nodes: Vec<String>,
+        up_to: u64,
+        follow: bool,
+    ) {
+        match self.implementation {
+            Lang::RS => {
+                let hash = chain_hash.to_string();
+                let control = self.control.to_string();
+                let id = id.to_string();
+                tokio::task::spawn(async move {
+                    if let Err(err) = Cli::follow(control, id, hash, sync_nodes, up_to, follow)
+                        .run()
+                        .await
+                    {
+                        error!("test::CLI::follow: {err}");
+                    };
+                });
+            }
+            Lang::GO => panic!("out of test scope"),
         }
     }
 
