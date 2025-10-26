@@ -52,8 +52,8 @@ codegen-units = 1
 
 [features]
 default = ["blstrs"]
+blstrs = ["energon/bls12381_blstrs", "energon/bn254_arkworks"]
+arkworks = ["energon/bls12381_arkworks", "energon/bn254_arkworks"]
 # Disable TLS for local tests.
 insecure = []
-blstrs = ["energon/bls12381_blstrs"]
-arkworks = ["energon/bls12381_arkworks"]
 test-integration = []
