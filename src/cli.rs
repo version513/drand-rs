@@ -211,7 +211,7 @@ impl Cli {
         crate::log::setup_tracing(self.verbose)?;
 
         match self.commands {
-            Cmd::GenerateKeypair(config) => keygen(config).await?,
+            Cmd::GenerateKeypair(config) => generate_keypair(config).await?,
             Cmd::Start(config) => start(config).await?,
             Cmd::Load { control, id } => load_beacon(&control, id).await?,
             Cmd::Stop { control, id } => stop(&control, id).await?,
@@ -237,13 +237,13 @@ impl Cli {
     }
 }
 
-async fn keygen(config: KeyGenConfig) -> Result<()> {
+async fn generate_keypair(config: KeyGenConfig) -> Result<()> {
     println!("Generating private / public key pair");
     match config.scheme.as_str() {
-        DefaultScheme::ID => _keygen::<DefaultScheme>(&config)?,
-        UnchainedScheme::ID => _keygen::<UnchainedScheme>(&config)?,
-        SigsOnG1Scheme::ID => _keygen::<SigsOnG1Scheme>(&config)?,
-        BN254UnchainedOnG1Scheme::ID => _keygen::<BN254UnchainedOnG1Scheme>(&config)?,
+        DefaultScheme::ID => keygen::<DefaultScheme>(&config)?,
+        UnchainedScheme::ID => keygen::<UnchainedScheme>(&config)?,
+        SigsOnG1Scheme::ID => keygen::<SigsOnG1Scheme>(&config)?,
+        BN254UnchainedOnG1Scheme::ID => keygen::<BN254UnchainedOnG1Scheme>(&config)?,
         _ => bail!("keygen: unknown scheme: {}", config.scheme),
     }
 
@@ -257,8 +257,8 @@ async fn keygen(config: KeyGenConfig) -> Result<()> {
     Ok(())
 }
 
-/// Generic helper for [`keygen`]
-fn _keygen<S: Scheme>(config: &KeyGenConfig) -> Result<()> {
+/// Generic helper for [`generate_keypair`]
+fn keygen<S: Scheme>(config: &KeyGenConfig) -> Result<()> {
     let address = Address::precheck(&config.address)?;
     let pair = Pair::<S>::generate(address)?;
     let store = FileStore::new_checked(&config.folder, &config.id)?;
