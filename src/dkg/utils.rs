@@ -76,7 +76,12 @@ impl<S: Scheme> GateKeeper<S> {
         if let Some(short_sig) = p.metadata.signature.get(..SHORT_SIG_BYTES) {
             let sig_hex = hex::encode(short_sig);
             if self.seen_gossip.contains(&sig_hex) {
-                debug!(&self.log, "gatekeeper: ignoring duplicate gossip packet: type {}, sig {sig_hex}, from {}", p.data, p.metadata.address);
+                debug!(
+                    &self.log,
+                    "gatekeeper: ignoring duplicate gossip packet: type {}, sig {sig_hex}, from {}",
+                    p.data,
+                    p.metadata.address
+                );
             } else {
                 debug!(&self.log, "gatekeeper: processing DKG gossip packet: type {}, sig {sig_hex}, id {}, allegedly from {}",
                       p.data, p.metadata.beacon_id, p.metadata.address);

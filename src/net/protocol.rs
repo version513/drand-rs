@@ -92,7 +92,8 @@ impl Protocol for ProtocolHandler {
             .send_partial((partial, tx))
             .await
             .map_err(|err| Status::unknown(err.to_string()))?;
-        rx.await
+        let _reserved = rx
+            .await
             .map_err(|err| Status::unknown(err.to_string()))?
             .map_err(|err| Status::unknown(err.to_string()))?;
 
