@@ -69,7 +69,7 @@ pub struct Config {
     /// Indicates the id for the randomness generation process which will be started
     #[arg(long, default_value = None)]
     pub id: Option<String>,
-    /// <BEACON_ID> (you can put multiple ones) for which to enable application-layer response time measurement.
+    /// `BEACON_ID` (you can put multiple ones) for which to enable application-layer response time measurement.
     pub monitored_ids: Vec<String>,
 }
 
