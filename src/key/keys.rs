@@ -7,7 +7,7 @@ use energon::{
     traits::{Affine, ScalarField},
 };
 
-/// Pair is a wrapper around a random scalar and the corresponding public key
+/// Pair is a wrapper around a random scalar and the corresponding public key.
 #[derive(Debug, PartialEq)]
 pub struct Pair<S: Scheme> {
     private: S::Scalar,
@@ -91,8 +91,8 @@ impl<S: Scheme> DistPublic<S> {
     }
 }
 
-/// Share represents the private information that a node holds after a successful
-/// DKG. This information MUST stay private !
+/// Share represents the private information that a node holds
+/// after a successful DKG. This information MUST stay private!
 #[derive(PartialEq)]
 pub struct Share<S: Scheme> {
     /// Coefficients of the public polynomial holding the public key.
@@ -106,12 +106,12 @@ impl<S: Scheme> Share<S> {
         Self { commits, pri_share }
     }
 
-    /// Public returns the distributed public key associated with the distributed key share
+    /// Public returns the distributed public key associated with the distributed key share.
     pub fn public(&self) -> &DistPublic<S> {
         &self.commits
     }
 
-    /// Private returns the private share used to produce a partial signature
+    /// Private returns the private share used to produce a partial signature.
     pub fn private(&self) -> &PriShare<S> {
         &self.pri_share
     }
