@@ -1,7 +1,7 @@
 use super::Scheme;
 use crate::net::utils::Address;
-use anyhow::Result;
 use energon::{
+    drand::error::SchemeError,
     kyber::poly::PriShare,
     points::{KeyPoint, SigPoint},
     traits::{Affine, ScalarField},
@@ -20,11 +20,12 @@ impl<S: Scheme> Pair<S> {
     }
 
     /// Returns a freshly created private / public key pair.
-    pub fn generate(address: Address) -> Result<Self> {
+    pub fn generate(address: Address) -> Result<Self, SchemeError> {
         let private = S::Scalar::random();
         let key = S::sk_to_pk(&private);
         let mut msg = S::ID.as_bytes().to_vec();
-        msg.extend_from_slice(key.hash()?.as_slice());
+        let hashed_key = key.hash().map_err(SchemeError::Backends)?;
+        msg.extend_from_slice(hashed_key.as_slice());
         let signature = S::bls_sign(&msg, &private)?;
         let public = Identity::new(address, key, signature);
 
