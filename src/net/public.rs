@@ -29,7 +29,7 @@ impl Public for PublicHandler {
     /// Server streaming response type for the `public_rand_stream` method.
     type PublicRandStreamStream = ResponseStream;
 
-    /// TODO: remove
+    /// TODO: implement if we need to support relays in same way.
     async fn public_rand(
         &self,
         _request: Request<PublicRandRequest>,
@@ -37,7 +37,7 @@ impl Public for PublicHandler {
         Err(Status::unimplemented("public_rand: PublicRandRequest"))
     }
 
-    /// TODO: remove
+    /// TODO: implement if we need to support relays in same way.
     async fn public_rand_stream(
         &self,
         _request: Request<PublicRandRequest>,

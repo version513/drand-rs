@@ -174,16 +174,6 @@ impl FromStr for Seconds {
 }
 
 impl Metadata {
-    /// Default implementation of `Metadata` which always contains [`NodeVersion`]
-    ///
-    /// Note: This function  should be used instead of default impl provided by [`::prost::Message`]
-    pub(super) fn with_default() -> Self {
-        Self {
-            node_version: Some(VERSION),
-            ..Default::default()
-        }
-    }
-
     pub fn with_id(beacon_id: String) -> Self {
         Self {
             node_version: Some(VERSION),

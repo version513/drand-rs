@@ -15,7 +15,7 @@ use crate::{
             protocol_server::{Protocol, ProtocolServer},
             public_server::PublicServer,
             BeaconPacket, Empty, IdentityRequest, IdentityResponse, Metadata, PartialBeaconPacket,
-            StatusRequest, StatusResponse, SyncRequest,
+            SyncRequest,
         },
     },
     transport::utils::ConvertProto,
@@ -137,14 +137,6 @@ impl Protocol for ProtocolHandler {
             .map_err(|err| Status::unknown(err.to_string()))?;
 
         Ok(Response::new(Box::pin(ReceiverStream::new(stream_rx))))
-    }
-
-    // TODO: remove
-    async fn status(
-        &self,
-        _request: Request<StatusRequest>,
-    ) -> Result<Response<StatusResponse>, Status> {
-        Err(Status::unimplemented("status: StatusRequest"))
     }
 }
 
