@@ -120,4 +120,3 @@ fn bundle_from_proto<S: Scheme>(proto: DkgPacket) -> Option<Bundle<S>> {
 
     Some(bundle)
 }
-
