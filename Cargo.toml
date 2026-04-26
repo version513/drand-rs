@@ -4,7 +4,6 @@ name = "drand"
 version = "0.2.0"
 edition = "2021"
 
-
 [dependencies]
 energon = { git = "https://github.com/version513/energon.git", rev = "670db05" }
 thiserror = "2.0.11"
