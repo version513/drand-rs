@@ -558,7 +558,7 @@ async fn util_long_check(
         let id = beacon_id.clone();
         set.spawn({
             async move {
-                let log = crate::log::set_node(&report.node.to_string());
+                let log = crate::log::set_node(report.node.as_str());
                 let mut report = report;
                 let time_total = Instant::now();
                 for i in 1..=retries {
